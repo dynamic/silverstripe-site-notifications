@@ -13,7 +13,6 @@ class ContentDataExtension extends DataExtension
      */
     private static $db = [
         'Title' => 'Varchar(255)',
-        'ShowTitle' => 'Boolean',
         'Content' => 'HTMLText',
     ];
 
@@ -39,14 +38,6 @@ class ContentDataExtension extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        // Add a combined field for "Title" and "Displayed" checkbox in a Bootstrap input group
-        $fields->removeByName('ShowTitle');
-        $fields->replaceField(
-            'Title',
-            TextCheckboxGroupField::create()
-                ->setName('Title')
-        );
-
         $fields->dataFieldByName('Content')
             ->setRows(5);
     }
