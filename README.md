@@ -16,20 +16,45 @@ composer require dynamic/silverstripe-site-notifications
 ## License
 See [License](license.md)
 
-## Example configuration (optional)
-If your module makes use of the config API in SilverStripe it's a good idea to provide an example config
- here that will get the module working out of the box and expose the user to the possible configuration options.
+## Configuration
 
-Provide a yaml code example where possible.
+Apply `SiteTreeDataExtension` to `SiteTree`:
 
 ```yaml
+SilverStripe\CMS\Model\SiteTree:
+  extensions:
+    - Dynamic\Notifications\Extension\SiteTreeDataExtension
 
-Page:
-  config_option: true
-  another_config:
-    - item1
-    - item2
+```
 
+## Template
+
+In your top-level `Page.ss` template:
+
+```yaml
+<% if $Violators %>
+    <div class="violators">
+        <% loop $Violators %>
+            <div id="special-discount-line-{$ID}" class="violators__violator top4">
+                <div class="special-discount-content">
+                    <div class="special-discount-text">
+                        $Content
+                    </div>
+                </div>
+            </div>
+        <% end_loop %>
+    </div>
+<% end_if %>
+
+<% if $PopUps %>
+    <% loop $PopUps.Limit(1) %>
+        <% if not $PopUpCookie %>
+        <div id="eighteen" class="popup special-discount" data-cookie="$CookieName">
+            $Content
+        </div>
+        <% end_if %>
+    <% end_loop %>
+<% end_if %>
 ```
 
 ## Maintainers
