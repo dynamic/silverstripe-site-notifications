@@ -2,6 +2,7 @@
 
 namespace Dynamic\Notifications\Admin;
 
+use Dynamic\Notifications\Model\PopUp;
 use Dynamic\Notifications\Model\Violator;
 use SilverStripe\Admin\ModelAdmin;
 
@@ -25,8 +26,8 @@ class SiteNotificationsAdmin extends ModelAdmin
      * @var array
      */
     private static $managed_models = [
-        //PopUp::class,
         Violator::class,
+        PopUp::class,
     ];
 
     /**

@@ -2,50 +2,63 @@
 
 namespace Dynamic\Notifications\Model;
 
-use DNADesign\Elemental\Forms\TextCheckboxGroupField;
 use Dynamic\Notifications\Extension\ContentDataExtension;
 use Dynamic\Notifications\Extension\ExpirationDataExtension;
+use Sheadawson\Linkable\Forms\LinkField;
+use Sheadawson\Linkable\Models\Link;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Assets\Image;
+use SilverStripe\Control\Cookie;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
 
 /**
- * Class Violator
+ * Class PopUp
  * @package Dynamic\Notifications\Model
  */
-class Violator extends DataObject
+class PopUp extends DataObject
 {
     /**
      * @var string
      */
-    private static $singular_name = 'Violator';
+    private static $singular_name = 'Pop Up';
 
     /**
      * @var string
      */
-    private static $plural_name = 'Violators';
+    private static $plural_name = 'Pop Ups';
 
     /**
      * @var array
      */
-    private static $db = [
-        'Sort' => 'Int',
+    private static $has_one = [
+        'Image' => Image::class,
+        'ContentLink' => Link::class,
     ];
 
     /**
-     * @var string
+     * @var array
      */
-    private static $default_sort = 'Sort';
+    private static $owns = [
+        'Image',
+    ];
 
     /**
      * @var array
      */
     private static $summary_fields = [
+        'Image.CMSThumbnail' => 'Image',
         'Title' => 'Title',
         'StartTime.Nice' => 'Starts',
         'EndTime.Nice' => 'Ends',
         'IsActive.Nice' => 'Active',
     ];
+
+    /**
+     * @var string
+     */
+    private static $table_name = 'Notification_PopUp';
 
     /**
      * @var array
@@ -57,16 +70,25 @@ class Violator extends DataObject
     ];
 
     /**
-     * @var string
-     */
-    private static $table_name = 'Notification_Violator';
-
-    /**
      * @return FieldList
      */
     public function getCMSFields()
     {
         $this->beforeUpdateCMSFields(function (FieldList $fields) {
+
+            $fields->dataFieldByName('Image')
+                ->setAllowedFileCategories('image')
+                ->setFolderName('Uplaods/Notifications/PopUp')
+                ->setIsMultiUpload(false);
+
+            $fields->replaceField(
+                'ContentLinkID',
+                LinkField::create('ContentLink')
+            );
+
+            $fields->dataFieldByName('Content')
+                ->setRows(5);
+
             $fields->removeByName([
                 'Sort',
             ]);
@@ -80,11 +102,29 @@ class Violator extends DataObject
                 [
                     $fields->dataFieldByName('StartTime'),
                     $fields->dataFieldByName('EndTime'),
+                    $fields->dataFieldByName('Image'),
+                    $fields->dataFieldByName('ContentLink'),
                 ],
                 'Content'
             );
         }
 
         return $fields;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCookieName()
+    {
+        return str_replace('&', 'and', str_replace(' ', '_', $this->Title));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPopUpCookie()
+    {
+        return Cookie::get($this->getCookieName());
     }
 }
