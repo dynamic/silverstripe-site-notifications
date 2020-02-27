@@ -1,3 +1,7 @@
 Dynamic\Notifications\Model\Violator:
   one:
     Title: 'Violator One'
+
+Dynamic\Notifications\Model\PopUp:
+  one:
+    Title: 'Pop Up One'
