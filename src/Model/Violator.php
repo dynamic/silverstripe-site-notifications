@@ -17,8 +17,6 @@ use SilverStripe\Versioned\Versioned;
  */
 class Violator extends DataObject
 {
-    use Dismissible;
-
     /**
      * @var string
      */
