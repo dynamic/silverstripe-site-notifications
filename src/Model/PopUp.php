@@ -4,6 +4,7 @@ namespace Dynamic\Notifications\Model;
 
 use Dynamic\Notifications\Extension\ContentDataExtension;
 use Dynamic\Notifications\Extension\ExpirationDataExtension;
+use Dynamic\Notifications\Traits\Dismissible;
 use Sheadawson\Linkable\Forms\LinkField;
 use Sheadawson\Linkable\Models\Link;
 use SilverStripe\AssetAdmin\Forms\UploadField;
@@ -19,6 +20,8 @@ use SilverStripe\Versioned\Versioned;
  */
 class PopUp extends DataObject
 {
+    use Dismissible;
+
     /**
      * @var string
      */
@@ -110,21 +113,5 @@ class PopUp extends DataObject
         }
 
         return $fields;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCookieName()
-    {
-        return str_replace('&', 'and', str_replace(' ', '_', $this->Title));
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPopUpCookie()
-    {
-        return Cookie::get($this->getCookieName());
     }
 }
