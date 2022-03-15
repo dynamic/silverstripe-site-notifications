@@ -4,7 +4,9 @@ namespace Dynamic\Notifications\Model;
 
 use DNADesign\Elemental\Forms\TextCheckboxGroupField;
 use Dynamic\Notifications\Extension\ContentDataExtension;
+use Dynamic\Notifications\Extension\DismissibleExtension;
 use Dynamic\Notifications\Extension\ExpirationDataExtension;
+use Dynamic\Notifications\Traits\Dismissible;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
@@ -54,6 +56,7 @@ class Violator extends DataObject
         Versioned::class,
         ContentDataExtension::class,
         ExpirationDataExtension::class,
+        DismissibleExtension::class,
     ];
 
     /**

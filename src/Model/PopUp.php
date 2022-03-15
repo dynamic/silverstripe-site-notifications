@@ -3,12 +3,14 @@
 namespace Dynamic\Notifications\Model;
 
 use Dynamic\Notifications\Extension\ContentDataExtension;
+use Dynamic\Notifications\Extension\DismissibleExtension;
 use Dynamic\Notifications\Extension\ExpirationDataExtension;
 use Sheadawson\Linkable\Forms\LinkField;
 use Sheadawson\Linkable\Models\Link;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\Control\Cookie;
+use SilverStripe\Dev\Deprecation;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
@@ -67,6 +69,7 @@ class PopUp extends DataObject
         Versioned::class,
         ContentDataExtension::class,
         ExpirationDataExtension::class,
+        DismissibleExtension::class,
     ];
 
     /**
@@ -125,6 +128,8 @@ class PopUp extends DataObject
      */
     public function getPopUpCookie()
     {
-        return Cookie::get($this->getCookieName());
+        Deprecation::notice('1.3', 'getPopUpCookie() is deprecated. Use getDismissibleCookie().');
+        
+        return $this->getDismissibleCookie();
     }
 }
