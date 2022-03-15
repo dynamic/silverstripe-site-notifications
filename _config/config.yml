@@ -1,7 +1,13 @@
 ---
 name: site-notifications-config
 ---
+SilverStripe\Control\Director:
+  rules:
+    'violatordata//$Action/$ID/$Name': Dynamic\Notifications\Controller\ViolatorController
 
+PageController:
+  extensions:
+    - Dynamic\Notifications\Extension\PageControllerExtension
 ---
 Only:
   moduleexists: 'ryanpotter/silverstripe-cms-theme'
