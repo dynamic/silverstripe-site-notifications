@@ -23,6 +23,11 @@ class SiteNotificationsAdmin extends ModelAdmin
     private static $menu_title = 'Site Notifications';
 
     /**
+     * @var string
+     */
+    private static string $menu_icon_class = 'font-icon-attention';
+
+    /**
      * @var array
      */
     private static $managed_models = [

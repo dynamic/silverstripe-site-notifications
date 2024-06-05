@@ -1,5 +1,8 @@
 ---
 name: site-notifications-config
+After:
+  - '#rootroutes'
+  - '#coreroutes'
 ---
 SilverStripe\Control\Director:
   rules:
@@ -8,9 +11,3 @@ SilverStripe\Control\Director:
 PageController:
   extensions:
     - Dynamic\Notifications\Extension\PageControllerExtension
----
-Only:
-  moduleexists: 'ryanpotter/silverstripe-cms-theme'
----
-Dynamic\Notifications\Admin\SiteNotificationsAdmin:
-  menu_icon_class: 'far fa-bell'

@@ -4,12 +4,11 @@ namespace Dynamic\Notifications\Model;
 
 use Dynamic\Notifications\Extension\ContentDataExtension;
 use Dynamic\Notifications\Extension\ExpirationDataExtension;
-use Sheadawson\Linkable\Forms\LinkField;
-use Sheadawson\Linkable\Models\Link;
-use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\Control\Cookie;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\LinkField\Form\LinkField;
+use SilverStripe\LinkField\Models\Link;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
 
@@ -83,7 +82,7 @@ class PopUp extends DataObject
 
             $fields->replaceField(
                 'ContentLinkID',
-                LinkField::create('ContentLinkID', 'Content Link')
+                LinkField::create('ContentLink', 'Content Link')
             );
 
             $fields->dataFieldByName('Content')

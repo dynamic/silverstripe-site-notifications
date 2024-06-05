@@ -2,7 +2,6 @@
 
 namespace Dynamic\Notifications\Model;
 
-use DNADesign\Elemental\Forms\TextCheckboxGroupField;
 use Dynamic\Notifications\Extension\ContentDataExtension;
 use Dynamic\Notifications\Extension\ExpirationDataExtension;
 use SilverStripe\Forms\FieldList;
