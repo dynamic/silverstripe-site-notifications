@@ -15,7 +15,7 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "silverstripe/linkfield":"^3.0",
+        "silverstripe/linkfield":"^4.0",
         "silverstripe/recipe-cms": "^5.0"
     },
     "require-dev": {
