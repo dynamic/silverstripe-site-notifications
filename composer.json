@@ -19,7 +19,8 @@
         "silverstripe/recipe-cms": "^5.0"
     },
     "require-dev": {
-        "silverstripe/recipe-testing": "^3"
+        "silverstripe/recipe-testing": "^3",
+        "dnadesign/silverstripe-elemental": "^5"
     },
     "autoload": {
         "psr-4": {
