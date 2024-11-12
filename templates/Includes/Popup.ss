@@ -1,5 +1,5 @@
-<% if $PopUps %>
-    <% loop $PopUps.Limit(1) %>
+<% if $PopUp %>
+    <% with $PopUp %>
         <!-- Modal -->
         <div class="popup__modal modal fade" id="modal-{$ID}"  tabindex="-1" aria-labelledby="modal-{$ID}-title" aria-hidden="true"<% if $ShowOnce %> data-cookiename="$CookieName"<% end_if %> data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered">
@@ -33,5 +33,5 @@
                 </div>
             </div>
         </div>
-    <% end_loop %>
+    <% end_with %>
 <% end_if %>

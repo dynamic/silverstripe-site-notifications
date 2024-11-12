@@ -3,9 +3,10 @@
 namespace Dynamic\Notifications\Extension;
 
 use Dynamic\Notifications\Model\PopUp;
+use SilverStripe\Control\Cookie;
 use SilverStripe\Core\Extension;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataList;
-use SilverStripe\ORM\DB;
 use SilverStripe\View\Requirements;
 
 /**
@@ -23,15 +24,25 @@ class PageControllerExtension extends Extension
     }
 
     /**
-     * @return DataList
+     * @return PopUp
      */
-    public function getPopUps(): DataList
+    public function getPopUp(): PopUp
     {
         $list = PopUp::get()->filter([
             'StartTime:LessThanOrEqual' => date("Y-m-d H:i:s", strtotime('now')),
             'EndTime:GreaterThanOrEqual' => date("Y-m-d H:i:s", strtotime('now')),
         ]);
 
-        return $list->shuffle();
+        $list = $list->filterByCallback(function ($item) {
+            if ($item->ShowOnce) {
+                if (Cookie::get($item->CookieName)) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+        return $list->shuffle()->first();
     }
 }
