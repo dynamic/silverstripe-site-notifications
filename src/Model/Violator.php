@@ -137,9 +137,9 @@ class Violator extends DataObject
         parent::onBeforeWrite();
 
         if ($this->ShowOnce && !$this->CookieName) {
-            $this->CookieName = URLSegmentFilter::create()->filter($this->Title);
+            $this->CookieName = $this->filterCookieName($this->Title);
         } elseif ($this->ShowOnce) {
-            $this->CookieName = URLSegmentFilter::create()->filter($this->CookieName);
+            $this->CookieName = $this->filterCookieName($this->CookieName);
         }
     }
 
@@ -166,6 +166,10 @@ class Violator extends DataObject
 
         if ($this->exists() && $this->isInDB()) {
             $result = $result->exclude('ID', $this->ID);
+        }
+
+        if ($result->count() === 0) {
+            $result = PopUp::get()->filter('CookieName', $this->filterCookieName($this->CookieName));
         }
 
         return $result->count() === 0;
