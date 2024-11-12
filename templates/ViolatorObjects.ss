@@ -1,6 +1,6 @@
 <% if $Violators %>
 <% loop $Violators %>
-<div id="violator-{$ID}" class="violators__violator container-fluid text-center" role="alert">
+<div id="violator-{$ID}" class="violators__violator container-fluid text-center" role="alert"<% if $ShowOnce %> data-cookiename="$CookieName"<% end_if %>>
     <strong>$Title</strong><br>
     <div class="violator-textn">
         $Content
