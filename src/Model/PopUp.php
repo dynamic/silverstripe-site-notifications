@@ -192,7 +192,9 @@ class PopUp extends DataObject
         }
 
         if ($result->count() === 0) {
-            $result = PopUp::get()->filter('CookieName', $this->filterCookieName($this->CookieName))->exclude('ID', $this->ID);
+            $result = PopUp::get()
+                ->filter('CookieName', $this->filterCookieName($this->CookieName))
+                ->exclude('ID', $this->ID);
         }
 
         return $result->count() === 0;
