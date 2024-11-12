@@ -33,6 +33,8 @@ class Violator extends DataObject
      * @var array
      */
     private static array $db = [
+        'Title' => 'Varchar(255)',
+        'Content' => 'HTMLText',
         'Sort' => 'Int',
         'ShowOnce' => 'Boolean',
         'CookieName' => 'Varchar(255)',
@@ -51,6 +53,18 @@ class Violator extends DataObject
     private static $default_sort = 'Sort';
 
     /**
+     * @var array|array[]
+     */
+    private static array $searchable_fields = [
+        'Title' => [
+            'title' => 'Title',
+        ],
+        'Content' => [
+            'title' => 'Content',
+        ],
+    ];
+
+    /**
      * @var array
      */
     private static array $summary_fields = [
@@ -65,7 +79,6 @@ class Violator extends DataObject
      */
     private static array $extensions = [
         Versioned::class,
-        ContentDataExtension::class,
         ExpirationDataExtension::class,
     ];
 
@@ -102,11 +115,7 @@ class Violator extends DataObject
                     ->setDescription('Should this alert show only once? If "yes" you can set a name, or a cookie name will be generated. The cookie name will be have spaces and special characters removed.'),
                 'Title'
             );
-        });
 
-        $fields = parent::getCMSFields();
-
-        if ($fields->dataFieldByName('StartTime')) {
             $fields->addFieldsToTab(
                 'Root.Main',
                 [
@@ -115,9 +124,9 @@ class Violator extends DataObject
                 ],
                 'Content'
             );
-        }
+        });
 
-        return $fields;
+        return parent::getCMSFields();
     }
 
     /**

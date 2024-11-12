@@ -29,6 +29,14 @@ class PopUp extends DataObject
     private static $plural_name = 'Pop Ups';
 
     /**
+     * @var array|string[]
+     */
+    private static array $db = [
+        'Title' => 'Varchar(255)',
+        'Content' => 'HTMLText',
+    ];
+
+    /**
      * @var array
      */
     private static $has_one = [
@@ -41,6 +49,18 @@ class PopUp extends DataObject
      */
     private static $owns = [
         'Image',
+    ];
+
+    /**
+     * @var array|array[]
+     */
+    private static array $searchable_fields = [
+        'Title' => [
+            'title' => 'Title',
+        ],
+        'Content' => [
+            'title' => 'Content',
+        ],
     ];
 
     /**
@@ -62,16 +82,15 @@ class PopUp extends DataObject
     /**
      * @var array
      */
-    private static $extensions = [
+    private static array $extensions = [
         Versioned::class,
-        ContentDataExtension::class,
         ExpirationDataExtension::class,
     ];
 
     /**
      * @return FieldList
      */
-    public function getCMSFields()
+    public function getCMSFields(): FieldList
     {
         $this->beforeUpdateCMSFields(function (FieldList $fields) {
 
@@ -91,38 +110,34 @@ class PopUp extends DataObject
             $fields->removeByName([
                 'Sort',
             ]);
-        });
 
-        $fields = parent::getCMSFields();
-
-        if ($fields->dataFieldByName('StartTime')) {
             $fields->addFieldsToTab(
                 'Root.Main',
                 [
                     $fields->dataFieldByName('StartTime'),
                     $fields->dataFieldByName('EndTime'),
                     $fields->dataFieldByName('Image'),
-                    $fields->dataFieldByName('ContentLinkID'),
+                    $fields->dataFieldByName('ContentLink'),
                 ],
                 'Content'
             );
-        }
+        });
 
-        return $fields;
+        return parent::getCMSFields();
     }
 
     /**
-     * @return mixed
+     * @return array|string|string[]
      */
-    public function getCookieName()
+    public function getCookieName(): array|string
     {
         return str_replace('&', 'and', str_replace(' ', '_', $this->Title));
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getPopUpCookie()
+    public function getPopUpCookie(): ?string
     {
         return Cookie::get($this->getCookieName());
     }
