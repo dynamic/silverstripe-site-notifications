@@ -1,6 +1,16 @@
 window.addEventListener('load', function() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/violatordata?isAjax=1', true);
+  var url = '/violatordata?isAjax=1';
+
+  // Append stage=Stage to the URL if not already present
+  var currentUrl = new URL(window.location.href);
+  var params = currentUrl.searchParams;
+
+  if (params.has('stage') && params.get('stage') === 'Stage') {
+    url = url + '&stage=Stage';
+  }
+
+  xhr.open('GET', url, true);
 
   xhr.onload = function() {
     if (xhr.status >= 200 && xhr.status < 400) {
