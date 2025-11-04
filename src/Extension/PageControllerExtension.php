@@ -24,9 +24,9 @@ class PageControllerExtension extends Extension
     }
 
     /**
-     * @return PopUp
+     * @return PopUp|null
      */
-    public function getPopUp(): PopUp
+    public function getPopUp(): ?PopUp
     {
         $list = PopUp::get()->filter([
             'StartTime:LessThanOrEqual' => date("Y-m-d H:i:s", strtotime('now')),
