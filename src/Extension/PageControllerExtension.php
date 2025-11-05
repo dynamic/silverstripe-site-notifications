@@ -39,7 +39,7 @@ class PageControllerExtension extends Extension
             // Use template rendering with cookie handling
             Requirements::javascript('dynamic/silverstripe-site-notifications: client/js/violator.js');
         }
-        
+
         Requirements::javascript('dynamic/silverstripe-site-notifications: client/js/popup.js');
     }
 
@@ -73,15 +73,15 @@ class PageControllerExtension extends Extension
      */
     public function getViolators(): ArrayList
     {
-        $now = date("Y-m-d H:i:s", strtotime('now'));
+        $now = date("Y-m-d H:i:s");
         $list = Violator::get();
 
         $list = $list->filterByCallback(function ($item) use ($now) {
             // Check date range - if dates are set, violator must be within range
-            if ($item->StartTime && $item->StartTime > $now) {
+            if ($item->StartTime && $item->StartTime >= $now) {
                 return false;
             }
-            if ($item->EndTime && $item->EndTime < $now) {
+            if ($item->EndTime && $item->EndTime <= $now) {
                 return false;
             }
 

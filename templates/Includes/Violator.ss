@@ -1,6 +1,10 @@
 <% if $Violators %>
     <% loop $Violators %>
-        <div id="violator-{$ID}" class="violators__violator container-fluid text-center alert alert-warning alert-dismissible mb-0 border-top-0 border-end-0 border-start-0 rounded-0<% if $Last %> border-bottom-0<% end_if %>" role="alert"<% if $ShowOnce %> data-cookiename="$CookieName"<% end_if %>>
+        <% set $violatorClass = "violators__violator container-fluid text-center alert alert-warning alert-dismissible mb-0 border-top-0 border-end-0 border-start-0 rounded-0" %>
+        <% if $Last %>
+            <% set $violatorClass = "$violatorClass border-bottom-0" %>
+        <% end_if %>
+        <div id="violator-{$ID}" class="$violatorClass" role="alert"<% if $ShowOnce %> data-cookiename="$CookieName"<% end_if %>>
             <strong>$Title</strong>
             <div class="violator-text">
                 $Content
