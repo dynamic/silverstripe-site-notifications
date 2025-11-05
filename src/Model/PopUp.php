@@ -125,7 +125,7 @@ class PopUp extends DataObject
                 )->setName('cookie_settings')
                     ->setDescription(
                         'Should this alert show only once? If "yes" you can set a name, ' .
-                        'or a cookie name will be generated. The cookie name will be have ' .
+                        'or a cookie name will be generated. The cookie name will have ' .
                         'spaces and special characters removed.'
                     ),
                 'Title'
