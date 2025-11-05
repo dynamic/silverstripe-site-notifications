@@ -1,4 +1,14 @@
+/**
+ * @deprecated 3.0.0 AJAX violator loading is deprecated. Use template rendering instead.
+ * This file will be removed in version 3.0.0.
+ * To disable this warning, set PageController.use_ajax_violators to false in your config.
+ */
 window.addEventListener('load', function() {
+  console.warn(
+    'AJAX violator loading is deprecated and will be removed in version 3.0.0. ' +
+    'Please use template rendering instead by setting PageController.use_ajax_violators to false.'
+  );
+  
   var xhr = new XMLHttpRequest();
   var url = '/violatordata?isAjax=1';
 

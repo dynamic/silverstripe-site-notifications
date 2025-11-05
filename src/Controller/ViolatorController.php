@@ -9,7 +9,7 @@ use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Versioned\Versioned;
 
 /**
- *
+ * @deprecated 3.0.0 Use template rendering via PageControllerExtension::getViolators() instead of AJAX loading
  */
 class ViolatorController extends Controller
 {
@@ -31,6 +31,7 @@ class ViolatorController extends Controller
     }
 
     /**
+     * @deprecated 3.0.0 Use template rendering instead of AJAX loading
      * @return DBHTMLText|null
      */
     public function index(): ?DBHTMLText
