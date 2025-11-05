@@ -118,9 +118,16 @@ class PopUp extends DataObject
                         ]),
                     TextField::create('CookieName')
                         ->setTitle('Cookie Name')
-                        ->setDescription('Optional. Set a cookie name if the alert shows once, a cookie name will generate if none given.')
+                        ->setDescription(
+                            'Optional. Set a cookie name if the alert shows once, ' .
+                            'a cookie name will generate if none given.'
+                        )
                 )->setName('cookie_settings')
-                    ->setDescription('Should this alert show only once? If "yes" you can set a name, or a cookie name will be generated. The cookie name will be have spaces and special characters removed.'),
+                    ->setDescription(
+                        'Should this alert show only once? If "yes" you can set a name, ' .
+                        'or a cookie name will be generated. The cookie name will have ' .
+                        'spaces and special characters removed.'
+                    ),
                 'Title'
             );
 
