@@ -6,7 +6,7 @@ use Dynamic\Notifications\Model\PopUp;
 use Dynamic\Notifications\Model\Violator;
 use SilverStripe\Control\Cookie;
 use SilverStripe\Core\Extension;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\ORM\DataList;
 use SilverStripe\View\Requirements;
 
