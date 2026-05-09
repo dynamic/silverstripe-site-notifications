@@ -2,7 +2,7 @@
 
 namespace Dynamic\Notifications\Extension;
 
-use SilverStripe\Core\Extension\Extension;
+use SilverStripe\Core\Extension;
 
 class ExpirationDataExtension extends Extension
 {
