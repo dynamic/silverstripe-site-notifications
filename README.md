@@ -4,8 +4,8 @@ Display site notifications like violators and pop ups
 
 ## Requirements
 
-* SilverStripe ^4.0
-* dynamic/silverstripe-linkable ^1.0
+* Silverstripe ^6
+* silverstripe/linkfield ^5
 
 ## Installation
 
