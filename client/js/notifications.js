@@ -1,6 +1,26 @@
+/**
+ * @deprecated 3.0.0 AJAX violator loading is deprecated. Use template rendering instead.
+ * This file will be removed in version 3.0.0.
+ * To disable this warning, set PageController.use_ajax_violators to false in your config.
+ */
 window.addEventListener('load', function() {
+  console.warn(
+    'AJAX violator loading is deprecated and will be removed in version 3.0.0. ' +
+    'Please use template rendering instead by setting PageController.use_ajax_violators to false.'
+  );
+  
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/violatordata?isAjax=1', true);
+  var url = '/violatordata?isAjax=1';
+
+  // Append stage=Stage to the URL if not already present
+  var currentUrl = new URL(window.location.href);
+  var params = currentUrl.searchParams;
+
+  if (params.has('stage') && params.get('stage') === 'Stage') {
+    url = url + '&stage=Stage';
+  }
+
+  xhr.open('GET', url, true);
 
   xhr.onload = function() {
     if (xhr.status >= 200 && xhr.status < 400) {

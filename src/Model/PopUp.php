@@ -2,7 +2,7 @@
 
 namespace Dynamic\Notifications\Model;
 
-use Dynamic\Notifications\Extension\ContentDataExtension;
+
 use Dynamic\Notifications\Extension\ExpirationDataExtension;
 use SilverStripe\Assets\Image;
 use SilverStripe\Control\Cookie;
@@ -13,7 +13,7 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\LinkField\Form\LinkField;
 use SilverStripe\LinkField\Models\Link;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\ValidationResult;
+use SilverStripe\Core\Validation\ValidationResult;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\View\Parsers\URLSegmentFilter;
 
@@ -118,9 +118,16 @@ class PopUp extends DataObject
                         ]),
                     TextField::create('CookieName')
                         ->setTitle('Cookie Name')
-                        ->setDescription('Optional. Set a cookie name if the alert shows once, a cookie name will generate if none given.')
+                        ->setDescription(
+                            'Optional. Set a cookie name if the alert shows once, ' .
+                            'a cookie name will generate if none given.'
+                        )
                 )->setName('cookie_settings')
-                    ->setDescription('Should this alert show only once? If "yes" you can set a name, or a cookie name will be generated. The cookie name will be have spaces and special characters removed.'),
+                    ->setDescription(
+                        'Should this alert show only once? If "yes" you can set a name, ' .
+                        'or a cookie name will be generated. The cookie name will have ' .
+                        'spaces and special characters removed.'
+                    ),
                 'Title'
             );
 

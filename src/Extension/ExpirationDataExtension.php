@@ -2,9 +2,9 @@
 
 namespace Dynamic\Notifications\Extension;
 
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 
-class ExpirationDataExtension extends DataExtension
+class ExpirationDataExtension extends Extension
 {
     /**
      * @var array

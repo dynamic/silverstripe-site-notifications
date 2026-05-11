@@ -5,7 +5,7 @@
     "authors": [
         {
             "name": "Dynamic",
-            "email": "dev@dyamicagency.com",
+            "email": "dev@dynamicagency.com",
             "homepage": "https://www.dynamicagency.com"
         }
     ],
@@ -15,12 +15,13 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "silverstripe/linkfield":"^4.0",
-        "silverstripe/recipe-cms": "^5.0"
+        "silverstripe/linkfield": "^5",
+        "silverstripe/recipe-cms": "^6",
+        "silverstripe/vendor-plugin": "^3"
     },
     "require-dev": {
-        "silverstripe/recipe-testing": "^3",
-        "dnadesign/silverstripe-elemental": "^5"
+        "silverstripe/recipe-testing": "^4",
+        "dnadesign/silverstripe-elemental": "^6"
     },
     "autoload": {
         "psr-4": {
@@ -31,7 +32,10 @@
     "extra": {
         "expose": [
             "client/js"
-        ]
+        ],
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

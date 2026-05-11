@@ -6,9 +6,10 @@ use Dynamic\Notifications\Model\Violator;
 use SilverStripe\Control\Controller;
 use SilverStripe\Dev\Debug;
 use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\Versioned\Versioned;
 
 /**
- *
+ * @deprecated 3.0.0 Use template rendering via PageControllerExtension::getViolators() instead of AJAX loading
  */
 class ViolatorController extends Controller
 {
@@ -30,11 +31,20 @@ class ViolatorController extends Controller
     }
 
     /**
+     * @deprecated 3.0.0 Use template rendering instead of AJAX loading
      * @return DBHTMLText|null
      */
     public function index(): ?DBHTMLText
     {
-        $list = Violator::get()->filter([
+        $stage = $this->getRequest()->getVar('stage');
+
+        if ($stage === 'Stage') {
+            $list = Versioned::get_by_stage(Violator::class, Versioned::DRAFT);
+        } else {
+            $list = Versioned::get_by_stage(Violator::class, Versioned::LIVE);
+        }
+
+        $list = $list->filter([
             'StartTime:LessThanOrEqual' => date("Y-m-d H:i:s", strtotime('now')),
             'EndTime:GreaterThanOrEqual' => date("Y-m-d H:i:s", strtotime('now')),
         ]);
