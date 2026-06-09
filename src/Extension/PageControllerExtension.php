@@ -68,7 +68,7 @@ class PageControllerExtension extends Extension
 
     /**
      * Get active violators for template rendering
-     * 
+     *
      * @return ArrayList<Violator>
      */
     public function getViolators(): ArrayList

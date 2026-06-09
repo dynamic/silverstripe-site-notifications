@@ -2,7 +2,6 @@
 
 namespace Dynamic\Notifications\Model;
 
-
 use Dynamic\Notifications\Extension\ExpirationDataExtension;
 use SilverStripe\Assets\Image;
 use SilverStripe\Control\Cookie;
