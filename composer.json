@@ -15,9 +15,9 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
+        "php": "^8.3",
         "silverstripe/linkfield": "^5",
-        "silverstripe/recipe-cms": "^6",
-        "silverstripe/vendor-plugin": "^3"
+        "silverstripe/recipe-cms": "^6"
     },
     "require-dev": {
         "silverstripe/recipe-testing": "^4",
@@ -27,6 +27,13 @@
         "psr-4": {
             "Dynamic\\Notifications\\": "src/",
             "Dynamic\\Notifications\\Test\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "silverstripe/recipe-plugin": true,
+            "silverstripe/vendor-plugin": true
         }
     },
     "extra": {
