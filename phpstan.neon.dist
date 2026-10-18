@@ -14,12 +14,9 @@ parameters:
       identifier: silverstan.injectable.useCreate
       count: 1
       path: src/Admin/SiteNotificationsAdmin.php
-    # NOTE for anyone analysing this module locally: these findings only appear when the
-    # silverstan PHPStan extension is actually loaded, which happens through
-    # phpstan/extension-installer when Composer plugins are enabled. `composer install
-    # --no-plugins` leaves extension-installer's stub GeneratedConfig in place, and then
-    # PHPStan reports a different, misleading set instead - 14 property.notFound findings
-    # for the `$db` fields `$CookieName` / `$ShowOnce` on PopUp and Violator, which
-    # silverstan resolves through DataObject's magic property access. Those are NOT
-    # suppressed here on purpose. Analyse with plugins enabled, or include
+    # This finding requires the silverstan extension, which phpstan/extension-installer
+    # wires up only when Composer plugins are enabled. Analysing after `composer install
+    # --no-plugins` therefore reports a different set - 14 property.notFound findings for
+    # `$db` fields silverstan does resolve - and those are deliberately not suppressed
+    # here. Analyse with plugins enabled, or include
     # vendor/cambis/silverstan/extension.neon in a local config.
