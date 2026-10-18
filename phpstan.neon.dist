@@ -3,43 +3,23 @@ parameters:
   treatPhpDocTypesAsCertain: false
   paths:
     - src
-  # The finding set for this module differs between dependency resolutions: with the
-  # stable `silverstripe/framework` 6.2.x release the `$db` property reads below are
-  # reported, while CI's `composer update` resolves framework 6.x-dev and reports the
-  # `silverstan.injectable.useCreate` finding instead. Exact `count` values (and
-  # unmatched-ignore reporting), as used in dynamic/silverstripe-elemental-testimonials,
-  # would therefore fail one of the two environments, so unmatched patterns are allowed
-  # to go unused here. Each entry is still anchored to one exact message and file, so any
-  # NEW kind of finding still fails the build; what this flag gives up is only the warning
-  # when a suppression below has stopped matching anything.
-  reportUnmatchedIgnoredErrors: false
   ignoreErrors:
-    # Pre-existing PHPStan findings in src/, suppressed so that enabling PHPStan in CI
-    # stays a config-only change with no behaviour risk. These are reads/writes of
-    # DataObject database fields declared in the `$db` array, which PHPStan cannot see
-    # through DataObject's magic property access (reported against the stable framework
-    # resolution). Fix the code and remove these entries in the PR that closes
+    # Pre-existing PHPStan finding in src/, suppressed so that enabling PHPStan in CI
+    # stays a config-only change with no behaviour risk: `new GridFieldOrderableRows()`
+    # should be `GridFieldOrderableRows::create()` so extension hooks still apply. Fix
+    # the code and remove this entry in the PR that closes
     # dynamic/silverstripe-site-notifications#25.
     -
-      message: '#^Access to an undefined property Dynamic\\Notifications\\Model\\PopUp\:\:\$CookieName\.$#'
-      identifier: property.notFound
-      path: src/Model/PopUp.php
-    -
-      message: '#^Access to an undefined property Dynamic\\Notifications\\Model\\PopUp\:\:\$ShowOnce\.$#'
-      identifier: property.notFound
-      path: src/Model/PopUp.php
-    -
-      message: '#^Access to an undefined property Dynamic\\Notifications\\Model\\Violator\:\:\$CookieName\.$#'
-      identifier: property.notFound
-      path: src/Model/Violator.php
-    -
-      message: '#^Access to an undefined property Dynamic\\Notifications\\Model\\Violator\:\:\$ShowOnce\.$#'
-      identifier: property.notFound
-      path: src/Model/Violator.php
-    # Pre-existing finding reported only under the framework 6.x-dev resolution CI uses:
-    # `new GridFieldOrderableRows('Sort')` should be `GridFieldOrderableRows::create()`.
-    # Suppressed rather than fixed so this PR stays config-only; also tracked by
-    # dynamic/silverstripe-site-notifications#25.
-    -
+      message: '#^Use Symbiote\\GridFieldExtensions\\GridFieldOrderableRows\:\:create\(\) instead of new Symbiote\\GridFieldExtensions\\GridFieldOrderableRows\(\)\.$#'
       identifier: silverstan.injectable.useCreate
+      count: 1
       path: src/Admin/SiteNotificationsAdmin.php
+    # NOTE for anyone analysing this module locally: these findings only appear when the
+    # silverstan PHPStan extension is actually loaded, which happens through
+    # phpstan/extension-installer when Composer plugins are enabled. `composer install
+    # --no-plugins` leaves extension-installer's stub GeneratedConfig in place, and then
+    # PHPStan reports a different, misleading set instead - 14 property.notFound findings
+    # for the `$db` fields `$CookieName` / `$ShowOnce` on PopUp and Violator, which
+    # silverstan resolves through DataObject's magic property access. Those are NOT
+    # suppressed here on purpose. Analyse with plugins enabled, or include
+    # vendor/cambis/silverstan/extension.neon in a local config.
