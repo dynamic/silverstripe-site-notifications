@@ -3,30 +3,43 @@ parameters:
   treatPhpDocTypesAsCertain: false
   paths:
     - src
+  # The finding set for this module differs between dependency resolutions: with the
+  # stable `silverstripe/framework` 6.2.x release the `$db` property reads below are
+  # reported, while CI's `composer update` resolves framework 6.x-dev and reports the
+  # `silverstan.injectable.useCreate` finding instead. Exact `count` values (and
+  # unmatched-ignore reporting), as used in dynamic/silverstripe-elemental-testimonials,
+  # would therefore fail one of the two environments, so unmatched patterns are allowed
+  # to go unused here. Each entry is still anchored to one exact message and file, so any
+  # NEW kind of finding still fails the build; what this flag gives up is only the warning
+  # when a suppression below has stopped matching anything.
+  reportUnmatchedIgnoredErrors: false
   ignoreErrors:
     # Pre-existing PHPStan findings in src/, suppressed so that enabling PHPStan in CI
     # stays a config-only change with no behaviour risk. These are reads/writes of
     # DataObject database fields declared in the `$db` array, which PHPStan cannot see
-    # through DataObject's magic property access. Fix the code (declare the fields as
-    # typed properties / @property PHPDoc) and remove these entries in the PR that
-    # closes dynamic/silverstripe-site-notifications#25.
+    # through DataObject's magic property access (reported against the stable framework
+    # resolution). Fix the code and remove these entries in the PR that closes
+    # dynamic/silverstripe-site-notifications#25.
     -
       message: '#^Access to an undefined property Dynamic\\Notifications\\Model\\PopUp\:\:\$CookieName\.$#'
       identifier: property.notFound
-      count: 5
       path: src/Model/PopUp.php
     -
       message: '#^Access to an undefined property Dynamic\\Notifications\\Model\\PopUp\:\:\$ShowOnce\.$#'
       identifier: property.notFound
-      count: 2
       path: src/Model/PopUp.php
     -
       message: '#^Access to an undefined property Dynamic\\Notifications\\Model\\Violator\:\:\$CookieName\.$#'
       identifier: property.notFound
-      count: 5
       path: src/Model/Violator.php
     -
       message: '#^Access to an undefined property Dynamic\\Notifications\\Model\\Violator\:\:\$ShowOnce\.$#'
       identifier: property.notFound
-      count: 2
       path: src/Model/Violator.php
+    # Pre-existing finding reported only under the framework 6.x-dev resolution CI uses:
+    # `new GridFieldOrderableRows('Sort')` should be `GridFieldOrderableRows::create()`.
+    # Suppressed rather than fixed so this PR stays config-only; also tracked by
+    # dynamic/silverstripe-site-notifications#25.
+    -
+      identifier: silverstan.injectable.useCreate
+      path: src/Admin/SiteNotificationsAdmin.php
