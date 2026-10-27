@@ -1,0 +1,22 @@
+parameters:
+  level: 1
+  treatPhpDocTypesAsCertain: false
+  paths:
+    - src
+  ignoreErrors:
+    # Pre-existing PHPStan finding in src/, suppressed so that enabling PHPStan in CI
+    # stays a config-only change with no behaviour risk: `new GridFieldOrderableRows()`
+    # should be `GridFieldOrderableRows::create()` so extension hooks still apply. Fix
+    # the code and remove this entry in the PR that closes
+    # dynamic/silverstripe-site-notifications#25.
+    -
+      message: '#^Use Symbiote\\GridFieldExtensions\\GridFieldOrderableRows\:\:create\(\) instead of new Symbiote\\GridFieldExtensions\\GridFieldOrderableRows\(\)\.$#'
+      identifier: silverstan.injectable.useCreate
+      count: 1
+      path: src/Admin/SiteNotificationsAdmin.php
+    # This finding requires the silverstan extension, which phpstan/extension-installer
+    # wires up only when Composer plugins are enabled. Analysing after `composer install
+    # --no-plugins` therefore reports a different set - 14 property.notFound findings for
+    # `$db` fields silverstan does resolve - and those are deliberately not suppressed
+    # here. Analyse with plugins enabled, or include
+    # vendor/cambis/silverstan/extension.neon in a local config.
